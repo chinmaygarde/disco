@@ -2,14 +2,19 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("../../tools/impeller.gni")
+import("../tools/disco.gni")
 
-group("shell") {
-  deps = []
+disco_component("shell") {
+  sources = [
+    "shell.cc",
+    "shell.h",
+    "switches.cc",
+    "switches.h",
+  ]
 
-  if (is_mac) {
-    deps += [ "platform/darwin/macos" ]
-  } else {
-    assert(false, "Disco does not support this platform yet.")
-  }
+  deps = [
+    "../../base",
+    "../runtime",
+    "//flutter/fml",
+  ]
 }

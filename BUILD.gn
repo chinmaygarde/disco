@@ -9,8 +9,10 @@ config("disco_public_config") {
 }
 
 group("disco") {
-  deps = [
-    "runtime",
-    "shell",
-  ]
+  deps = []
+  if (is_mac) {
+    deps += [ "shell/platform/darwin/macos" ]
+  } else {
+    assert(false, "Disco does not support this platform yet.")
+  }
 }

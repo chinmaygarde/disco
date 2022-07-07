@@ -10,5 +10,9 @@ disco_component("runtime") {
     "runtime.h",
   ]
 
-  deps = [ "//flutter/shell/platform/embedder:embedder_as_internal_library" ]
+  deps = [
+    "../../base",
+    "//flutter/fml",
+    "//flutter/shell/platform/embedder:embedder_as_internal_library",
+  ]
 }

@@ -12,7 +12,7 @@ disco_component("macos") {
   sources = [ "disco.cc" ]
 
   deps = [
-    "../../../../runtime",
+    "../../../../shell",
     "//flutter/fml",
   ]
 }
