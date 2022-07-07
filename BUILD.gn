@@ -4,6 +4,13 @@
 
 import("../tools/impeller.gni")
 
+config("disco_public_config") {
+  include_dirs = [ "//flutter/impeller" ]
+}
+
 group("disco") {
-  deps = [ "shell" ]
+  deps = [
+    "runtime",
+    "shell",
+  ]
 }

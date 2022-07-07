@@ -4,14 +4,15 @@
 
 #include "flutter/fml/command_line.h"
 
-namespace impeller {
+namespace disco {
 
 bool Main(const fml::CommandLine& command_line) {
   return false;
 }
 
-}  // namespace impeller
+}  // namespace disco
 
 int main(int argc, char const* argv[]) {
-  return impeller::Main(fml::CommandLineFromArgcArgv(argc, argv));
+  return disco::Main(fml::CommandLineFromArgcArgv(argc, argv)) ? EXIT_SUCCESS
+                                                               : EXIT_FAILURE;
 }

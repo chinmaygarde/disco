@@ -1,0 +1,19 @@
+# Copyright 2013 The Flutter Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("../../tools/impeller.gni")
+
+disco_root = "//flutter/impeller/disco"
+
+template("disco_component") {
+  impeller_component(target_name) {
+    forward_variables_from(invoker, "*")
+
+    if (!defined(public_configs)) {
+      public_configs = []
+    }
+
+    public_configs += [ "$disco_root/:disco_public_config" ]
+  }
+}
