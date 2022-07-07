@@ -4,6 +4,8 @@
 
 #include "disco/runtime/runtime.h"
 
+#include <vector>
+
 #include "embedder.h"
 
 #include "flutter/fml/logging.h"
@@ -13,7 +15,9 @@ namespace disco {
 
 struct Runtime::EngineHandle {
   explicit EngineHandle(FLUTTER_API_SYMBOL(FlutterEngine) engine)
-      : engine_(engine) {}
+      : engine_(engine) {
+    FML_DCHECK(engine);
+  }
 
   ~EngineHandle() {
     if (::FlutterEngineShutdown(engine_) != kSuccess) {
@@ -27,6 +31,11 @@ struct Runtime::EngineHandle {
 
 Runtime::Runtime(const std::string& assets_path,
                  const std::string& icu_data_path) {
+  if (::FlutterEngineRunsAOTCompiledDartCode()) {
+    VALIDATION_LOG << "Disco runtime is not AOT aware yet.";
+    return;
+  }
+
   FlutterRendererConfig null_renderer = {};
   null_renderer.type = kSoftware;
   null_renderer.software.struct_size = sizeof(FlutterSoftwareRendererConfig);
@@ -41,6 +50,11 @@ Runtime::Runtime(const std::string& assets_path,
   project.struct_size = sizeof(FlutterProjectArgs);
   project.assets_path = assets_path.c_str();
   project.icu_data_path = icu_data_path.c_str();
+  std::vector<const char*> project_command_line_args = {
+      "disco", "--observatory-port=7777", "--disable-service-auth-codes"};
+  project.command_line_argc = project_command_line_args.size();
+  project.command_line_argv = project_command_line_args.data();
+  project.log_tag = "Disco";
 
   FLUTTER_API_SYMBOL(FlutterEngine) engine = {};
   auto result = ::FlutterEngineRun(FLUTTER_ENGINE_VERSION,  // version
