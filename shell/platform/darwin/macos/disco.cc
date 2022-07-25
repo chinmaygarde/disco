@@ -23,6 +23,8 @@ bool Main(const fml::CommandLine& command_line) {
     return false;
   }
 
+  FML_LOG(ERROR) << "All done.";
+
   return true;
 }
 

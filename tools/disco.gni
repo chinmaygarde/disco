@@ -2,7 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("../../tools/impeller.gni")
+import("//flutter/impeller/tools/impeller.gni")
+import("//flutter/testing/testing.gni")
 
 disco_root = "//flutter/impeller/disco"
 
@@ -16,4 +17,10 @@ template("disco_component") {
 
     public_configs += [ "$disco_root/:disco_public_config" ]
   }
+}
+
+template("disco_application") {
+  assert(defined(invoker.dart_main), "The Dart main must be defined.")
+  assert(defined(invoker.fixtures), "The fixtures must be defined.")
+  assert(is_mac, "Disco only supports the Mac platform at this time.")
 }
