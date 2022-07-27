@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/compiled_action.gni")
 import("//flutter/impeller/tools/impeller.gni")
 import("//flutter/testing/testing.gni")
 
@@ -41,5 +42,59 @@ template("disco_application") {
       ":$fixture_target_name",
       "//flutter/impeller/disco/shell",
     ]
+  }
+}
+
+template("epoxy_native") {
+  assert(defined(invoker.source),
+         "The Epoxy bindings definition must be specified.")
+
+  epoxy_file_name = get_path_info(invoker.source, "name")
+
+  epoxy_cxx_path = "$target_gen_dir/$epoxy_file_name.cc"
+  epoxy_cxx_template =
+      "//flutter/impeller/disco/epoxy/template/cxx_impl.template.epoxy"
+
+  epoxy_hdr_path = "$target_gen_dir/$epoxy_file_name.h"
+  epoxy_hdr_template =
+      "//flutter/impeller/disco/epoxy/template/cxx_interface.template.epoxy"
+
+  cxx_target_name = "epoxy_cxx_$target_name"
+  compiled_action(cxx_target_name) {
+    tool = "//flutter/impeller/disco/epoxy"
+    inputs = [ invoker.source ]
+    outputs = [ epoxy_cxx_path ]
+    args = [
+      "--output",
+      rebase_path(epoxy_cxx_path, root_build_dir),
+      "--idl",
+      rebase_path(invoker.source, root_build_dir),
+      "--template-file",
+      rebase_path(epoxy_cxx_template, root_build_dir),
+    ]
+  }
+
+  hdr_target_name = "epoxy_hdr_$target_name"
+  compiled_action(hdr_target_name) {
+    tool = "//flutter/impeller/disco/epoxy"
+    inputs = [ invoker.source ]
+    outputs = [ epoxy_hdr_path ]
+    args = [
+      "--output",
+      rebase_path(epoxy_hdr_path, root_build_dir),
+      "--idl",
+      rebase_path(invoker.source, root_build_dir),
+      "--template-file",
+      rebase_path(epoxy_hdr_template, root_build_dir),
+    ]
+  }
+
+  disco_component(target_name) {
+    sources = []
+
+    sources += get_target_outputs(":$cxx_target_name")
+    sources += get_target_outputs(":$hdr_target_name")
+
+    deps = [ ":$cxx_target_name" ]
   }
 }

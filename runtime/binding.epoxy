@@ -1,0 +1,19 @@
+// Copyright 2013 The Flutter Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+namespace disco {
+
+struct Version {
+  uint32_t major;
+  uint32_t minor;
+  uint32_t patch;
+}
+
+struct Binding {
+ Version* version;
+}
+
+function GetBinding() -> Binding*
+
+} // namespace hello
