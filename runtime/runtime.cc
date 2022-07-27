@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "embedder.h"
-
 #include "flutter/fml/logging.h"
 #include "impeller/base/validation.h"
 

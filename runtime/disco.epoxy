@@ -4,16 +4,13 @@
 
 namespace disco {
 
-struct Version {
-  uint32_t major;
-  uint32_t minor;
-  uint32_t patch;
+enum FFIResult {
+  kSuccess,
+  kFailure,
 }
 
-struct Binding {
- Version* version;
-}
+function FFIDiscoInitialize() -> FFIResult
 
-function GetBinding() -> Binding*
+function FFIDiscoDestroy() -> FFIResult
 
-} // namespace hello
+} // namespace disco

@@ -4,14 +4,20 @@
 
 import("../tools/disco.gni")
 
-epoxy_native("runtime_bindings") {
-  source = "disco.epoxy"
-}
-
 disco_component("runtime_types") {
   sources = [ "types.h" ]
 
   deps = [ "//flutter/fml" ]
+}
+
+epoxy_native("runtime_interface") {
+  source = "disco.epoxy"
+}
+
+disco_component("runtime_bindings") {
+  sources = [ "disco.cc" ]
+
+  deps = [ ":runtime_interface" ]
 }
 
 disco_component("runtime") {
@@ -22,7 +28,6 @@ disco_component("runtime") {
 
   deps = [
     ":runtime_bindings",
-    ":runtime_types",
     "../../base",
     "//flutter/fml",
     "//flutter/shell/platform/embedder:embedder_as_internal_library",

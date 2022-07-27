@@ -93,9 +93,20 @@ template("epoxy_native") {
     extension = ".h"
   }
 
+  dart_target_name = "epoxy_dart_$target_name"
+  epoxy(dart_target_name) {
+    source = invoker.source
+    template_source =
+        "//flutter/impeller/disco/epoxy/template/dart.template.epoxy"
+    extension = ".dart"
+  }
+
   config_target_name = "epoxy_native_config_$target_name"
   config(config_target_name) {
-    include_dirs = [ target_gen_dir ]
+    include_dirs = [
+      target_gen_dir,
+      "$root_gen_dir/flutter/impeller",
+    ]
   }
 
   disco_component(target_name) {
@@ -111,5 +122,7 @@ template("epoxy_native") {
       ":$hdr_target_name",
       "//flutter/impeller/disco/runtime:runtime_types",
     ]
+
+    data_deps = [ ":$dart_target_name" ]
   }
 }

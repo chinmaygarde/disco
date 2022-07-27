@@ -5,8 +5,9 @@
 DISCO_EXTERN_C_BEGIN
 {% for ns in namespaces %}
 {% for func in ns.functions%}
+DISCO_FFI_VISIBILITY
 {% if func.returns_enum or func.returns_struct %}{{ns.name}}::{% endif -%}
-{{func.return_type}}{% if func.pointer_return %}* {% endif -%}
+{{func.return_type}} {% if func.pointer_return %}* {% endif -%}
 EPOXY_BIND_{{func.name}}(
 {% for arg in func.arguments -%}
 {% if arg.is_enum %}

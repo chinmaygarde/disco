@@ -34,7 +34,7 @@ struct {{ struct.name }} {
   {{var.type}}{% if var.is_pointer %} *{% endif %} {{var.identifier}};
 {% endfor -%}
 };  // struct {{ struct.name }}
-{% endfor %}
+{% endfor -%}
 {#-
     Function Definitions
 -#}
@@ -44,7 +44,6 @@ struct {{ struct.name }} {
  {{arg.type}}{% if arg.is_pointer %}*{% endif %} {{ arg.identifier }} {% if not loop.is_last %},{% endif %}
 {%- endfor -%}
 );
-{% endfor %}
+{% endfor -%}
 }  // namespace {{ ns.name }}
-
-{% endfor %}
+{% endfor -%}
