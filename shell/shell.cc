@@ -4,11 +4,12 @@
 
 #include "impeller/disco/shell/shell.h"
 
+#include "flutter/fml/logging.h"
 #include "impeller/base/validation.h"
 
 namespace disco {
 
-Shell::Shell(Switches switches)
+Shell::Shell(const Switches& switches)
     : runtime_(
           std::make_unique<Runtime>(switches.assets_path, switches.icu_path)) {
   if (!runtime_->IsValid()) {
@@ -18,7 +19,9 @@ Shell::Shell(Switches switches)
   is_valid_ = true;
 }
 
-Shell::~Shell() = default;
+Shell::~Shell() {
+  FML_LOG(ERROR) << "Shutting down the shell.";
+}
 
 bool Shell::IsValid() const {
   return is_valid_;

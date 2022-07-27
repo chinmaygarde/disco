@@ -7,12 +7,3 @@ import("../tools/impeller.gni")
 config("disco_public_config") {
   include_dirs = [ "//flutter/impeller" ]
 }
-
-group("disco") {
-  deps = []
-  if (is_mac) {
-    deps += [ "shell/platform/darwin/macos" ]
-  } else {
-    assert(false, "Disco does not support this platform yet.")
-  }
-}

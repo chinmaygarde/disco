@@ -15,11 +15,6 @@ namespace disco {
 struct Switches {
   std::string assets_path;
   std::string icu_path;
-
-  static std::optional<Switches> FromCommandLine(
-      const fml::CommandLine& command_line);
-
-  static std::string GetUsage();
 };
 
 }  // namespace disco

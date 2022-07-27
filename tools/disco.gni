@@ -21,6 +21,25 @@ template("disco_component") {
 
 template("disco_application") {
   assert(defined(invoker.dart_main), "The Dart main must be defined.")
-  assert(defined(invoker.fixtures), "The fixtures must be defined.")
+  assert(defined(invoker.assets), "The assets must be defined.")
   assert(is_mac, "Disco only supports the Mac platform at this time.")
+
+  fixture_target_name = "disco_fixtures_$target_name"
+  test_fixtures(fixture_target_name) {
+    dart_main = invoker.dart_main
+    fixtures = invoker.assets
+    fixtures += [ "//third_party/icu/common/icudtl.dat" ]
+  }
+
+  disco_component(target_name) {
+    # TODO(csg): This is only necessary because we are stealing the test
+    # harnesses snapshotters.
+    testonly = true
+    target_type = "executable"
+    output_name = "disco_$target_name"
+    deps = [
+      ":$fixture_target_name",
+      "//flutter/impeller/disco/shell",
+    ]
+  }
 }

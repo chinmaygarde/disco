@@ -1,4 +1,4 @@
 
 void main() {
-  print("Hello");
+  print("Hello from Disco Application.");
 }

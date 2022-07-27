@@ -12,7 +12,7 @@ namespace disco {
 
 class Shell {
  public:
-  explicit Shell(Switches switches);
+  explicit Shell(const Switches& switches);
 
   ~Shell();
 
