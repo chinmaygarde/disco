@@ -45,56 +45,71 @@ template("disco_application") {
   }
 }
 
+template("epoxy") {
+  assert(defined(invoker.source), "The epoxy source must be specified.")
+  assert(defined(invoker.template_source),
+         "The epoxy template source must be specified.")
+  assert(defined(invoker.extension), "The output extension must be specified.")
+
+  file_name = get_path_info(invoker.source, "name")
+  extension = invoker.extension
+  out_path = "$target_gen_dir/$file_name$extension"
+
+  compiled_action(target_name) {
+    tool = "//flutter/impeller/disco/epoxy"
+    inputs = [
+      invoker.source,
+      invoker.template_source,
+    ]
+    outputs = [ out_path ]
+    args = [
+      "--output",
+      rebase_path(out_path, root_build_dir),
+      "--idl",
+      rebase_path(invoker.source, root_build_dir),
+      "--template-file",
+      rebase_path(invoker.template_source, root_build_dir),
+    ]
+  }
+}
+
 template("epoxy_native") {
   assert(defined(invoker.source),
          "The Epoxy bindings definition must be specified.")
 
-  epoxy_file_name = get_path_info(invoker.source, "name")
-
-  epoxy_cxx_path = "$target_gen_dir/$epoxy_file_name.cc"
-  epoxy_cxx_template =
-      "//flutter/impeller/disco/epoxy/template/cxx_impl.template.epoxy"
-
-  epoxy_hdr_path = "$target_gen_dir/$epoxy_file_name.h"
-  epoxy_hdr_template =
-      "//flutter/impeller/disco/epoxy/template/cxx_interface.template.epoxy"
-
   cxx_target_name = "epoxy_cxx_$target_name"
-  compiled_action(cxx_target_name) {
-    tool = "//flutter/impeller/disco/epoxy"
-    inputs = [ invoker.source ]
-    outputs = [ epoxy_cxx_path ]
-    args = [
-      "--output",
-      rebase_path(epoxy_cxx_path, root_build_dir),
-      "--idl",
-      rebase_path(invoker.source, root_build_dir),
-      "--template-file",
-      rebase_path(epoxy_cxx_template, root_build_dir),
-    ]
+  epoxy(cxx_target_name) {
+    source = invoker.source
+    template_source =
+        "//flutter/impeller/disco/epoxy/template/cxx.template.epoxy"
+    extension = ".cc"
   }
 
   hdr_target_name = "epoxy_hdr_$target_name"
-  compiled_action(hdr_target_name) {
-    tool = "//flutter/impeller/disco/epoxy"
-    inputs = [ invoker.source ]
-    outputs = [ epoxy_hdr_path ]
-    args = [
-      "--output",
-      rebase_path(epoxy_hdr_path, root_build_dir),
-      "--idl",
-      rebase_path(invoker.source, root_build_dir),
-      "--template-file",
-      rebase_path(epoxy_hdr_template, root_build_dir),
-    ]
+  epoxy(hdr_target_name) {
+    source = invoker.source
+    template_source =
+        "//flutter/impeller/disco/epoxy/template/hdr.template.epoxy"
+    extension = ".h"
+  }
+
+  config_target_name = "epoxy_native_config_$target_name"
+  config(config_target_name) {
+    include_dirs = [ target_gen_dir ]
   }
 
   disco_component(target_name) {
+    public_configs = [ ":$config_target_name" ]
+
     sources = []
 
     sources += get_target_outputs(":$cxx_target_name")
     sources += get_target_outputs(":$hdr_target_name")
 
-    deps = [ ":$cxx_target_name" ]
+    deps = [
+      ":$cxx_target_name",
+      ":$hdr_target_name",
+      "//flutter/impeller/disco/runtime:runtime_types",
+    ]
   }
 }

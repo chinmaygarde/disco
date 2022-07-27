@@ -110,8 +110,6 @@ static std::string TypeToDartType(const std::string& type) {
 CodeGen::RenderResult CodeGen::Render(
     const std::vector<Namespace>& namespaces) const {
   inja::Environment env;
-  env.set_trim_blocks(true);
-  env.set_lstrip_blocks(true);
   env.add_callback("dart_ffi_type", 1u, [](inja::Arguments& args) {
     return TypeToDartFFIType(args.at(0u)->get<std::string>());
   });
