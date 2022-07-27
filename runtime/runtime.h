@@ -8,6 +8,7 @@
 
 #include "flutter/fml/macros.h"
 
+namespace impeller {
 namespace disco {
 
 class Runtime {
@@ -27,3 +28,4 @@ class Runtime {
 };
 
 }  // namespace disco
+}  // namespace impeller

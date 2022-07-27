@@ -4,18 +4,27 @@
 
 #pragma once
 
-#include <optional>
-#include <string>
+#include <memory>
 
-#include "flutter/fml/command_line.h"
 #include "flutter/fml/macros.h"
+#include "impeller/playground/playground.h"
 
 namespace impeller {
 namespace disco {
 
-struct Switches {
-  std::string assets_path;
-  std::string icu_path;
+class Window {
+ public:
+  Window();
+
+  ~Window();
+
+  bool IsValid() const;
+
+ private:
+  std::unique_ptr<Playground> playground_;
+  bool is_valid_ = false;
+
+  FML_DISALLOW_COPY_AND_ASSIGN(Window);
 };
 
 }  // namespace disco

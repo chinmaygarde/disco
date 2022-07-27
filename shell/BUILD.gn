@@ -12,12 +12,15 @@ disco_component("shell") {
     "shell.h",
     "switches.cc",
     "switches.h",
+    "window.cc",
+    "window.h",
   ]
 
   deps = [
     "../../base",
     "../runtime",
     "//flutter/fml",
+    "//flutter/impeller/playground:playground_lib",
     "//flutter/testing:testing_lib",
   ]
 }

@@ -11,6 +11,7 @@
 #include "flutter/fml/paths.h"
 #include "flutter/testing/testing.h"
 
+namespace impeller {
 namespace disco {
 
 bool Main(const fml::CommandLine& command_line) {
@@ -32,8 +33,10 @@ bool Main(const fml::CommandLine& command_line) {
 }
 
 }  // namespace disco
+}  // namespace impeller
 
 int main(int argc, char const* argv[]) {
-  return disco::Main(fml::CommandLineFromArgcArgv(argc, argv)) ? EXIT_SUCCESS
-                                                               : EXIT_FAILURE;
+  return impeller::disco::Main(fml::CommandLineFromArgcArgv(argc, argv))
+             ? EXIT_SUCCESS
+             : EXIT_FAILURE;
 }

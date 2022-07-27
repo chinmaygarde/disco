@@ -7,15 +7,26 @@
 #include "flutter/fml/logging.h"
 #include "impeller/base/validation.h"
 
+namespace impeller {
 namespace disco {
 
-Shell::Shell(const Switches& switches)
-    : runtime_(
-          std::make_unique<Runtime>(switches.assets_path, switches.icu_path)) {
-  if (!runtime_->IsValid()) {
+Shell::Shell(const Switches& switches) {
+  auto runtime =
+      std::make_unique<Runtime>(switches.assets_path, switches.icu_path);
+  if (!runtime->IsValid()) {
     VALIDATION_LOG << "Could not create Disco runtime.";
     return;
   }
+
+  auto window = std::make_unique<Window>();
+  if (!window->IsValid()) {
+    VALIDATION_LOG << "Could not create window.";
+    return;
+  }
+
+  runtime_ = std::move(runtime);
+  window_ = std::move(window);
+
   is_valid_ = true;
 }
 
@@ -28,3 +39,4 @@ bool Shell::IsValid() const {
 }
 
 }  // namespace disco
+}  // namespace impeller

@@ -4,8 +4,10 @@
 
 #include "disco/shell/switches.h"
 
+namespace impeller {
 namespace disco {
 
 //
 
 }  // namespace disco
+}  // namespace impeller

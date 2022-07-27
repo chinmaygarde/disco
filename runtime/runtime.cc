@@ -10,6 +10,7 @@
 #include "flutter/fml/logging.h"
 #include "impeller/base/validation.h"
 
+namespace impeller {
 namespace disco {
 
 struct Runtime::EngineHandle {
@@ -77,3 +78,4 @@ bool Runtime::IsValid() const {
 }
 
 }  // namespace disco
+}  // namespace impeller

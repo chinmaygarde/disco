@@ -120,6 +120,10 @@ template("epoxy_native") {
     deps = [
       ":$cxx_target_name",
       ":$hdr_target_name",
+    ]
+
+    public_deps = [
+      "//flutter/fml",
       "//flutter/impeller/disco/runtime:runtime_types",
     ]
 
