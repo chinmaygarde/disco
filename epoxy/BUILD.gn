@@ -1,0 +1,42 @@
+# Copyright 2013 The Flutter Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//flutter/impeller/disco/tools/disco.gni")
+
+disco_component("epoxy") {
+  target_type = "executable"
+
+  include_dirs = [
+    "source/grammar",
+    "source",
+  ]
+
+  sources = [
+    "source/code_gen.cc",
+    "source/code_gen.h",
+    "source/command_line.cc",
+    "source/command_line.h",
+    "source/decls.h",
+    "source/driver.cc",
+    "source/driver.h",
+    "source/epoxy_main.cc",
+    "source/file.cc",
+    "source/file.h",
+    "source/grammar/lexer.cc",
+    "source/grammar/lexer.h",
+    "source/grammar/location.hh",
+    "source/grammar/parser.cc",
+    "source/grammar/parser.h",
+    "source/macros.h",
+    "source/scanner.cc",
+    "source/scanner.h",
+    "source/sema.cc",
+    "source/sema.h",
+    "source/types.cc",
+    "source/types.h",
+    "source/version.h",
+  ]
+
+  deps = [ "//third_party/inja" ]
+}
