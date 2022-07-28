@@ -9,12 +9,15 @@
 
 namespace disco {
 
-FFIResult FFIDiscoInitialize() {
-  return FFIResult::kFailure;
+DiscoContext* DiscoGetContext() {
+  return nullptr;
 }
 
-FFIResult FFIDiscoDestroy() {
-  return FFIResult::kFailure;
+DiscoResult DiscoLaunchApplication(DiscoContext* context) {
+  if (!context) {
+    return DiscoResult::kFailure;
+  }
+  return DiscoResult::kSuccess;
 }
 
 }  // namespace disco

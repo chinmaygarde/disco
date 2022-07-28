@@ -23,5 +23,16 @@ bool Window::IsValid() const {
   return is_valid_;
 }
 
+bool Window::Launch() const {
+  if (!IsValid()) {
+    return false;
+  }
+  playground_->SetupWindow(PlaygroundBackend::kMetal);
+  auto result = playground_->OpenPlaygroundHere(
+      [](RenderPass& pass) -> bool { return true; });
+  playground_->TeardownWindow();
+  return result;
+}
+
 }  // namespace disco
 }  // namespace impeller

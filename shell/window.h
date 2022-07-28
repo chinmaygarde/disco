@@ -20,6 +20,8 @@ class Window {
 
   bool IsValid() const;
 
+  bool Launch() const;
+
  private:
   std::unique_ptr<DiscoPlayground> playground_;
   bool is_valid_ = false;

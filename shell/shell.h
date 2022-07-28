@@ -20,6 +20,8 @@ class Shell {
 
   bool IsValid() const;
 
+  bool Launch();
+
  private:
   std::unique_ptr<Runtime> runtime_;
   std::unique_ptr<Window> window_;

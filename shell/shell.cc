@@ -30,6 +30,13 @@ Shell::Shell(const Switches& switches) {
   is_valid_ = true;
 }
 
+bool Shell::Launch() {
+  if (!IsValid()) {
+    return false;
+  }
+  return window_->Launch();
+}
+
 Shell::~Shell() {
   FML_LOG(ERROR) << "Shutting down the shell.";
 }

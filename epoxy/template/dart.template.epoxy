@@ -28,7 +28,7 @@ class {{ struct.name }} extends ffi.Struct {
 {% else if var.is_struct %}
   ffi.Pointer<{{var.type}}> {{var.identifier}};
 {% else if var.is_pointer %}
-  ffi.Pointer<ffi.{{dart_ffi_type(var.type)}}> {{var.identifier}};
+  external ffi.Pointer<ffi.{{dart_ffi_type(var.type)}}> {{var.identifier}};
 {% else %}
   @ffi.{{dart_ffi_type(var.type)}}()
   {{dart_type(var.type)}} {{var.identifier}};

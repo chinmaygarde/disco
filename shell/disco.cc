@@ -27,6 +27,11 @@ bool Main(const fml::CommandLine& command_line) {
     return false;
   }
 
+  if (!shell->Launch()) {
+    FML_LOG(ERROR) << "Could not launch shell.";
+    return false;
+  }
+
   return true;
 }
 

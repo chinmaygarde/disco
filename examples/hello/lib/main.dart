@@ -3,9 +3,9 @@ import '/Users/chinmaygarde/VersionControlled/engine/src/out/host_debug_unopt/ge
 import 'dart:ffi' as ffi;
 
 void main() {
-  AttachNativeBindings(ffi.DynamicLibrary.process());
-  if (FFIDiscoInitialize() != FFIResult.kSuccess) {
-    throw "Could not initialize the Disco runtime.";
-  }
+  // AttachNativeBindings(ffi.DynamicLibrary.process());
+  // if (FFIDiscoInitialize() != FFIResult.kSuccess) {
+  //   throw "Could not initialize the Disco runtime.";
+  // }
   print("Hello from Disco Application.");
 }

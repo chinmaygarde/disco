@@ -4,13 +4,17 @@
 
 namespace disco {
 
-enum FFIResult {
+enum DiscoResult {
   kSuccess,
   kFailure,
 }
 
-function FFIDiscoInitialize() -> FFIResult
+struct DiscoContext {
+  void* opaque;
+}
 
-function FFIDiscoDestroy() -> FFIResult
+function DiscoGetContext() -> DiscoContext*
+
+function DiscoLaunchApplication(DiscoContext* context) -> DiscoResult
 
 } // namespace disco
