@@ -27,8 +27,6 @@ bool Main(const fml::CommandLine& command_line) {
     return false;
   }
 
-  fml::MessageLoop::GetCurrent().Run();
-
   return true;
 }
 

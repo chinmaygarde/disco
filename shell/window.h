@@ -6,8 +6,8 @@
 
 #include <memory>
 
+#include "disco/shell/disco_playground.h"
 #include "flutter/fml/macros.h"
-#include "impeller/playground/playground.h"
 
 namespace impeller {
 namespace disco {
@@ -21,7 +21,7 @@ class Window {
   bool IsValid() const;
 
  private:
-  std::unique_ptr<Playground> playground_;
+  std::unique_ptr<DiscoPlayground> playground_;
   bool is_valid_ = false;
 
   FML_DISALLOW_COPY_AND_ASSIGN(Window);

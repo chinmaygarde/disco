@@ -9,25 +9,11 @@
 namespace impeller {
 namespace disco {
 
-class DiscoPlayground : public Playground {
- public:
-  DiscoPlayground() = default;
-
-  ~DiscoPlayground() = default;
-
-  void TestBody() override {}
-
- private:
-  FML_DISALLOW_COPY_AND_ASSIGN(DiscoPlayground);
-};
-
-Window::Window() {
-  auto playground = std::make_unique<DiscoPlayground>();
-  if (!playground) {
-    VALIDATION_LOG << "Could not create playground.";
+Window::Window() : playground_(std::make_unique<DiscoPlayground>()) {
+  if (!playground_->is_enabled()) {
+    VALIDATION_LOG << "Playgrounds are not enabled.";
     return;
   }
-  playground->SetUp();
   is_valid_ = true;
 }
 

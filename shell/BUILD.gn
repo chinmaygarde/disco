@@ -8,6 +8,8 @@ disco_component("shell") {
   testonly = true
   sources = [
     "disco.cc",
+    "disco_playground.cc",
+    "disco_playground.h",
     "shell.cc",
     "shell.h",
     "switches.cc",
@@ -20,7 +22,7 @@ disco_component("shell") {
     "../../base",
     "../runtime",
     "//flutter/fml",
-    "//flutter/impeller/playground:playground_lib",
+    "//flutter/impeller/playground:playground",
     "//flutter/testing:testing_lib",
   ]
 }
