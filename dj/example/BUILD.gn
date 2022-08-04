@@ -4,8 +4,8 @@
 
 import("//flutter/impeller/disco/tools/disco.gni")
 
-disco_application("hello") {
-  dart_main = "lib/main.dart"
+disco_application("example") {
+  dart_main = "example.dart"
 
   assets = []
 }

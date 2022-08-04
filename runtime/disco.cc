@@ -13,6 +13,8 @@ DiscoContext* DiscoGetContext() {
   return nullptr;
 }
 
+void DiscoContextRelease(DiscoContext* context) {}
+
 DiscoResult DiscoLaunchApplication(DiscoContext* context) {
   if (!context) {
     return DiscoResult::kFailure;
