@@ -2,9 +2,13 @@
 
 import 'dart:ffi' as ffi;
 {% for ns in namespaces %}
+
 {#
-  Enum definitions.
+   -----------------------------------------------------------------------------
+   Enum definitions.
+   -----------------------------------------------------------------------------
 #}
+
 {% for enum in ns.enums %}
 enum {{ enum.name }} {
 {% for member in enum.members -%}
@@ -12,8 +16,13 @@ enum {{ enum.name }} {
 {% endfor -%}
 } //  {{ enum.name }}
 {%- endfor -%}
+
+
+
 {#-
+   -----------------------------------------------------------------------------
    Struct Definitions.
+   -----------------------------------------------------------------------------
 -#}
 {% for struct in ns.structs %}
 class {{ struct.name }} extends ffi.Struct {
@@ -38,8 +47,12 @@ class {{ struct.name }} extends ffi.Struct {
 } //  struct {{ struct.name }}
 
 {% endfor %}
+
+
 {#
+   -----------------------------------------------------------------------------
    Function Definitions.
+   -----------------------------------------------------------------------------
 #}
 {# Typedef for the native function #}
 {% for func in ns.functions %}
@@ -98,7 +111,8 @@ Function(
 {% if not loop.is_last %},{% endif %}
 {% endfor %}
 );
-late {{func.name}}DesugaredDartType _{{func.name}}Desugared;
+late {{func.name}}CType {{func.name}}CFNPTR;
+late {{func.name}}DesugaredDartType {{func.name}}DartFNPTR;
 {# Generate the function that calls the desugared Dart function. For now, only enums are desugared. #}
 {% if func.returns_enum %}
   {{ func.return_type }}
@@ -129,7 +143,7 @@ ffi.Pointer<ffi.{{dart_ffi_type(arg.type)}}>
 {% if func.returns_enum %}
 {{func.return_type}}.values[
 {% endif %}
- _{{func.name}}Desugared(
+ {{func.name}}DartFNPTR(
 {% for arg in func.arguments %}
 {% if arg.is_enum %}
 {{arg.identifier}}.index
@@ -153,7 +167,8 @@ void AttachNativeBindings(ffi.DynamicLibrary dylib) {
   {# Bind standalone functions. #}
   // Bind standalone functions
   {% for func in ns.functions %}
-  _{{func.name}}Desugared = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}").asFunction();
+  {{func.name}}CFNPTR = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}");
+  {{func.name}}DartFNPTR = {{func.name}}CFNPTR.asFunction();
   {% endfor %}
 }
 {% endfor %}

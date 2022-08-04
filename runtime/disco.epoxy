@@ -15,6 +15,8 @@ struct DiscoContext {
 
 function DiscoGetContext() -> DiscoContext*
 
+function DiscoContextRelease(DiscoContext* context) -> void
+
 function DiscoLaunchApplication(DiscoContext* context) -> DiscoResult
 
 } // namespace disco
