@@ -107,7 +107,7 @@ Function(
 {% if not loop.is_last %},{% endif %}
 {% endfor %}
 );
-late {{func.name}}DesugaredDartType {{func.name}}FNPTR;
+late {{func.name}}DesugaredDartType {{func.name}}DartFN;
 {# Generate the function that calls the desugared Dart function. For now, only enums are desugared. #}
 {% if func.returns_enum %}
   {{ func.return_type }}
@@ -138,7 +138,7 @@ ffi.Pointer<ffi.{{dart_ffi_type(arg.type)}}>
 {% if func.returns_enum %}
 {{func.return_type}}.values[
 {% endif %}
- {{func.name}}FNPTR(
+ {{func.name}}DartFN(
 {% for arg in func.arguments %}
 {% if arg.is_enum %}
 {{arg.identifier}}.index
@@ -162,7 +162,7 @@ void AttachNativeBindings(ffi.DynamicLibrary dylib) {
   {# Bind standalone functions. #}
   // Bind standalone functions
   {% for func in ns.functions %}
-  {{func.name}}FNPTR = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}").asFunction();
+  {{func.name}}DartFN = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}").asFunction();
   {% endfor %}
 
   print("Disco Bindings Initialized");

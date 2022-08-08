@@ -10,10 +10,13 @@
 namespace disco {
 
 DiscoContext* DiscoContextCreate() {
+  FML_LOG(ERROR) << __FUNCTION__;
   return nullptr;
 }
 
-void DiscoContextDestroy(DiscoContext* context) {}
+void DiscoContextDestroy(DiscoContext* context) {
+  FML_LOG(ERROR) << __FUNCTION__;
+}
 
 DiscoResult DiscoLaunchApplication(DiscoContext* context) {
   if (!context) {
