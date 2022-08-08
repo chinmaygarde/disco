@@ -13,9 +13,9 @@ struct DiscoContext {
   void* opaque;
 }
 
-function DiscoGetContext() -> DiscoContext*
+function DiscoContextCreate() -> DiscoContext*
 
-function DiscoContextRelease(DiscoContext* context) -> void
+function DiscoContextDestroy(DiscoContext* context) -> void
 
 function DiscoLaunchApplication(DiscoContext* context) -> DiscoResult
 

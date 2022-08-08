@@ -22,8 +22,11 @@ disco_component("runtime_bindings") {
 
 disco_component("runtime") {
   sources = [
+    "handle.cc",
+    "handle.h",
     "runtime.cc",
     "runtime.h",
+    "types.h",
   ]
 
   deps = [

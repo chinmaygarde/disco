@@ -3,27 +3,24 @@
 import 'dart:ffi' as ffi;
 {% for ns in namespaces %}
 
-{#
-   -----------------------------------------------------------------------------
-   Enum definitions.
-   -----------------------------------------------------------------------------
-#}
+
+// -----------------------------------------------------------------------------
+// Enum definitions.
+// -----------------------------------------------------------------------------
 
 {% for enum in ns.enums %}
 enum {{ enum.name }} {
 {% for member in enum.members -%}
   {{ member }},
 {% endfor -%}
-} //  {{ enum.name }}
+} // enum {{ enum.name }}
 {%- endfor -%}
 
 
 
-{#-
-   -----------------------------------------------------------------------------
-   Struct Definitions.
-   -----------------------------------------------------------------------------
--#}
+// -----------------------------------------------------------------------------
+// Struct Definitions.
+// -----------------------------------------------------------------------------
 {% for struct in ns.structs %}
 class {{ struct.name }} extends ffi.Struct {
 {% for var in struct.variables %}
@@ -44,18 +41,17 @@ class {{ struct.name }} extends ffi.Struct {
 {% endif %}
 {% endfor %}
 
-} //  struct {{ struct.name }}
+} //  class {{ struct.name }}
 
 {% endfor %}
 
 
-{#
-   -----------------------------------------------------------------------------
-   Function Definitions.
-   -----------------------------------------------------------------------------
-#}
+// -----------------------------------------------------------------------------
+// Function Definitions.
+// -----------------------------------------------------------------------------
 {# Typedef for the native function #}
 {% for func in ns.functions %}
+// For Function "{{func.name}}".
 typedef {{func.name}}CType =
 {% if func.returns_enum %}
   ffi.Uint64
@@ -111,8 +107,7 @@ Function(
 {% if not loop.is_last %},{% endif %}
 {% endfor %}
 );
-late {{func.name}}CType {{func.name}}CFNPTR;
-late {{func.name}}DesugaredDartType {{func.name}}DartFNPTR;
+late {{func.name}}DesugaredDartType {{func.name}}FNPTR;
 {# Generate the function that calls the desugared Dart function. For now, only enums are desugared. #}
 {% if func.returns_enum %}
   {{ func.return_type }}
@@ -143,7 +138,7 @@ ffi.Pointer<ffi.{{dart_ffi_type(arg.type)}}>
 {% if func.returns_enum %}
 {{func.return_type}}.values[
 {% endif %}
- {{func.name}}DartFNPTR(
+ {{func.name}}FNPTR(
 {% for arg in func.arguments %}
 {% if arg.is_enum %}
 {{arg.identifier}}.index
@@ -167,8 +162,9 @@ void AttachNativeBindings(ffi.DynamicLibrary dylib) {
   {# Bind standalone functions. #}
   // Bind standalone functions
   {% for func in ns.functions %}
-  // {{func.name}}CFNPTR = ;
-  {{func.name}}DartFNPTR = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}").asFunction();
+  {{func.name}}FNPTR = dylib.lookup<ffi.NativeFunction<{{func.name}}CType>>("EPOXY_BIND_{{func.name}}").asFunction();
   {% endfor %}
+
+  print("Disco Bindings Initialized");
 }
 {% endfor %}

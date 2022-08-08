@@ -5,11 +5,5 @@ class Context implements Finalizable {
   Pointer<disco.DiscoContext> context;
 
   Context.global()
-    : context = disco.DiscoGetContext();
-
-  // void setFinalizer() {
-  //   Pointer<NativeFinalizerFunction> function = disco.DiscoContextReleaseCFNPTR;
-  //   var finalizer = NativeFinalizer(function);
-  //   finalizer.attach(this, context.cast());
-  // }
+    : context = disco.DiscoContextCreate();
 }

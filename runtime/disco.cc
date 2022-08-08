@@ -9,11 +9,11 @@
 
 namespace disco {
 
-DiscoContext* DiscoGetContext() {
+DiscoContext* DiscoContextCreate() {
   return nullptr;
 }
 
-void DiscoContextRelease(DiscoContext* context) {}
+void DiscoContextDestroy(DiscoContext* context) {}
 
 DiscoResult DiscoLaunchApplication(DiscoContext* context) {
   if (!context) {
