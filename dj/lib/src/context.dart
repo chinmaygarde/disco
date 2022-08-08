@@ -3,13 +3,10 @@ import 'dart:ffi';
 
 class Context implements Finalizable {
   Pointer<disco.DiscoContext> context;
-
-  Context.global()
+  Context.create()
     : context = disco.DiscoContextCreate() {
-      // assert(context.address != 0);
-      var dylib = DynamicLibrary.process();
-      var functionPointer = dylib.lookup<NativeFunction<disco.DiscoContextDestroyCType>>("EPOXY_BIND_DiscoContextDestroy");
-      var finalizer = NativeFinalizer(functionPointer.cast());
+      assert(context.address != 0);
+      var finalizer = NativeFinalizer(disco.DiscoContextDestroyFNPTR.cast());
       finalizer.attach(this, context.cast());
     }
 }

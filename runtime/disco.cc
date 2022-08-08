@@ -18,11 +18,4 @@ void DiscoContextDestroy(DiscoContext* context) {
   FML_LOG(ERROR) << __FUNCTION__;
 }
 
-DiscoResult DiscoLaunchApplication(DiscoContext* context) {
-  if (!context) {
-    return DiscoResult::kFailure;
-  }
-  return DiscoResult::kSuccess;
-}
-
 }  // namespace disco

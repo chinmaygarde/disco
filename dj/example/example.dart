@@ -3,5 +3,5 @@ import 'package:dj/src/bindings.dart';
 
 void main() {
   initializeBindings();
-  var context = Context.global();
+  var context = Context.create();
 }
