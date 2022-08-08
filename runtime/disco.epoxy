@@ -10,11 +10,39 @@ enum DiscoResult {
 }
 
 struct DiscoContext {
-  void* opaque;
+  void* disco_object;
+}
+
+struct DiscoAllocator {
+  void* disco_object;
+}
+
+struct DiscoShaderLibrary {
+  void* disco_object;
+}
+
+struct DiscoSamplerLibrary {
+  void* disco_object;
+}
+
+struct DiscoCommandBuffer {
+  void* disco_object;
+}
+
+struct DiscoPipelineLibrary {
+  void* disco_object;
+}
+
+struct DiscoRenderPass {
+  void* disco_object;
 }
 
 function DiscoContextCreate() -> DiscoContext*
 
 function DiscoContextDestroy(DiscoContext* context) -> void
+
+function DiscoContextCreateRenderCommandBuffer(DiscoContext* context) -> DiscoCommandBuffer*
+
+function DiscoCommandBufferDestroy(DiscoCommandBuffer* buffer) -> void
 
 } // namespace disco

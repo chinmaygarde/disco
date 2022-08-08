@@ -50,8 +50,12 @@ Runtime::Runtime(const std::string& assets_path,
   project.struct_size = sizeof(FlutterProjectArgs);
   project.assets_path = assets_path.c_str();
   project.icu_data_path = icu_data_path.c_str();
+  project.shutdown_dart_vm_when_done = true;
   std::vector<const char*> project_command_line_args = {
-      "disco", "--observatory-port=7777", "--disable-service-auth-codes"};
+      "disco",                         // program name
+      "--observatory-port=7777",       //
+      "--disable-service-auth-codes",  //
+  };
   project.command_line_argc = project_command_line_args.size();
   project.command_line_argv = project_command_line_args.data();
   project.log_tag = "Disco";

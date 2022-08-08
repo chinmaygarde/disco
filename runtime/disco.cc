@@ -18,4 +18,13 @@ void DiscoContextDestroy(DiscoContext* context) {
   FML_LOG(ERROR) << __FUNCTION__;
 }
 
+DiscoCommandBuffer* DiscoContextCreateRenderCommandBuffer(
+    DiscoContext* context) {
+  return nullptr;
+}
+
+void DiscoCommandBufferDestroy(DiscoCommandBuffer* buffer) {
+  return;
+}
+
 }  // namespace disco
